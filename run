@@ -1,0 +1,36 @@
+#! /bin/bash
+set -e
+if [ ${1}x = -hx ]
+then
+echo
+echo "This Simple-Caculator is build with Lex&YACC, Please makesure you"
+echo "have installed lex/flex and yacc/bison before compiling the cacu-"
+echo "lator. All rights reserved by Rock Lee."
+echo
+echo "Following calculation is supported:"
+echo "    [1] Bit operation <\"& ^ | ~\">"
+echo "    [2] Basic operation <\"+ - * /\">"
+echo "    [3] Integer-Mod <\"%\">"
+echo
+echo "Other supported functions are listed below:"
+echo "    [1] Expressions are seperated with <\";\"> or <\"\n\">"
+echo "    [2] Variable assign-to-use <\"a = 3; a + 4;\">"
+echo "    [3] Basic type-checking"
+echo "    [4] Auto type-transmission"
+echo
+echo "Notation: Expression for float-type value like <\"1.0E4\"> is not"
+echo "          supported!"
+echo
+exit
+fi
+root=`dirname $0`
+cd $root
+lex ./test.lex
+echo ">>>> Lex Compiling Finished!"
+yacc -d ./test.y
+echo ">>>> YACC Compiling Finished!"
+#rm ./y.tab.h
+g++ ./lex.yy.c ./y.tab.c -o ./test
+echo ">>>> C Files Compiling Finished!"
+echo ">>>> You may use -h to get help infomation!"
+./test
